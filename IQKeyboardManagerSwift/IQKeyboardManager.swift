@@ -660,6 +660,22 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
     */
     open var layoutIfNeededOnUpdate = false
 
+	
+	///-----------------------------
+	/// MARK: UIScrollView Selection
+	///-----------------------------
+
+	public enum ScrollViewSelectionMode {
+		
+		/// Looks for the nearest `UIScrollView` superview of the selected textfield.
+		case nearest
+		
+		/// Looks for the farthest `UIScrollView` superview of the selected textfield.
+		case farthest
+	}
+	
+	open var scrollViewSelectionMode: ScrollViewSelectionMode = .nearest
+	
     ///-----------------------------------------------
     /// @name InteractivePopGestureRecognizer handling
     ///-----------------------------------------------
@@ -1028,6 +1044,8 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         
         showLog("Need to move: \(move)")
 
+		// TODO: Look for the scrollview here.
+		
         var superScrollView : UIScrollView? = nil
         var superView = textFieldView.superviewOfClassType(UIScrollView.self) as? UIScrollView
         
