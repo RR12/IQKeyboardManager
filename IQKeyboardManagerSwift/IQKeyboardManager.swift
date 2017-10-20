@@ -1050,18 +1050,21 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         //Getting UIScrollView whose scrolling is enabled.    //  (Bug ID: #285)
         while let view = superView {
 			
-            if (view.isScrollEnabled) {
+			let storeAndStop = (view.isScrollEnabled) && (scrollViewSelectionMode == .nearest)
+			let storeAndLookFurther = (view.isScrollEnabled) && (scrollViewSelectionMode == .farthest)
+
+            if storeAndStop {
 				
 				superScrollView = view
+				break
+			}
+			else if storeAndLookFurther {
 				
-				if scrollViewSelectionMode == .nearest {
-					break
-				}
-            }
-            else {
-                //  Getting it's superScrollView.   //  (Enhancement ID: #21, #24)
-                superView = view.superviewOfClassType(UIScrollView.self) as? UIScrollView
-            }
+				superScrollView = view
+			}
+
+			//  Getting it's superScrollView.   //  (Enhancement ID: #21, #24)
+			superView = view.superviewOfClassType(UIScrollView.self) as? UIScrollView
         }
         
         //If there was a lastScrollView.    //  (Bug ID: #34)
