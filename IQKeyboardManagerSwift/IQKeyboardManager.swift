@@ -1043,18 +1043,20 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         }
         
         showLog("Need to move: \(move)")
-
-		// TODO: Look for the scrollview here.
 		
         var superScrollView : UIScrollView? = nil
         var superView = textFieldView.superviewOfClassType(UIScrollView.self) as? UIScrollView
         
         //Getting UIScrollView whose scrolling is enabled.    //  (Bug ID: #285)
         while let view = superView {
-            
+			
             if (view.isScrollEnabled) {
-                superScrollView = view
-                break
+				
+				superScrollView = view
+				
+				if scrollViewSelectionMode == .nearest {
+					break
+				}
             }
             else {
                 //  Getting it's superScrollView.   //  (Enhancement ID: #21, #24)
